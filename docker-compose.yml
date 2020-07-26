@@ -1,0 +1,60 @@
+version: '2.0'
+services:
+  redis_1:
+    build: ./redis
+    ports: 
+      - "5001:6392"
+    networks:
+      redis_cluster:
+        ipv4_address: 172.19.0.2
+  redis_2:
+    build: ./redis
+    ports:
+      - "5002:6392"  
+    networks:
+      redis_cluster:
+        ipv4_address: 172.19.0.3
+  redis_3:
+    build: ./redis
+    ports:
+      - "5003:6392"
+    networks:
+      redis_cluster:
+        ipv4_address: 172.19.0.4
+  redis_4:
+    build: ./redis
+    ports:
+      - "5004:6392"
+    networks:
+      redis_cluster:
+        ipv4_address: 172.19.0.5
+  redis_5:
+    build: ./redis
+    ports:
+      - "5005:6392"
+    networks:
+      redis_cluster:
+        ipv4_address: 172.19.0.6
+  redis_6:
+    build: ./redis
+    ports:
+      - "5006:6392"
+    networks:
+      redis_cluster:
+        ipv4_address: 172.19.0.7
+  python_server:
+    build: ./python_server
+    stdin_open: true
+    tty: true
+    networks:
+      redis_cluster:
+        ipv4_address: 172.19.0.8
+
+
+networks:
+  redis_cluster:
+    driver: bridge  
+    ipam:
+      config:
+        - subnet: 172.19.0.0/24
+          gateway: 172.19.0.1
